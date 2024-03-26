@@ -1,15 +1,27 @@
-import Database from './common/Database';
+import {HashRouter, Route, Routes} from 'react-router-dom';
+import Dashboard from './pages/Dashboard';
+import {useEffect} from 'react';
+import {useDispatch} from 'react-redux';
+import Commits from './common/commits';
+import {setCommits} from './redux/slices/commits';
 
 function App() {
+  const dispatch = useDispatch();
 
-  const write = async() => {
-    const db = new Database();
-    await db.write('test', 15);
-  }
+  useEffect(() => {
+    (async function() {
+      const response = await Commits.getAll();
+      if(response.code !== 200) return;
+      dispatch(setCommits(response.data));
+    })();
+  }, []);
 
-  return (<div className={'p-2'}>
-    <button className={'p-1 bg-green-300'} onClick={write}>write</button>
-  </div>);
+  return (<HashRouter>
+    <Routes>
+      <Route path={''} element={<Dashboard />} />
+      <Route path={'*'} element={<div>Error 404: Page Not Found</div>} />
+    </Routes>
+  </HashRouter>);
 }
 
 export default App;
