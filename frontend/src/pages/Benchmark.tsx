@@ -1,18 +1,30 @@
-import {useDispatch, useSelector} from 'react-redux';
-import {State} from '../common/types';
-import {toDashboard} from '../redux/slices/page';
+import {useSelector} from 'react-redux';
+import {GenericProps, State} from '../common/types';
+import {Chart, Navbar} from '../components';
 
-function Benchmark(props: {name: string}) {
+type Props = GenericProps & {name: string};
+function Benchmark(props: Props) {
     const {name} = props;
-    const commits = useSelector((state: State) => state.commits);
-    const dispatch = useDispatch();
+    const commits = useSelector((state: State) => state.commits.filter(commit => commit.benchmark === name));
 
-    return(<section className={'p-2'}>
-        Benchmark single page: <b>{name}</b>
-        <button onClick={e => dispatch(toDashboard())} className={'ml-2 btn bg-red-800 p-1 text-white'}>
-            back
-        </button>
+    return(<section>
+        <Navbar />
+        <div className={'p-3'}>Benchmark: <b>{name}</b> ({commits.length} commits)</div>
+        {commits.map(commit => <div className={'m-1 p-3 border border-indigo-400 rounded d-flex'} key={commit.id}>
+            <label>Comment: <b>{commit.comment || 'None'}</b></label>
+            <label className={'ml-2'}>JDK: <b>{commit.jdk}</b></label>
+            <label className={'ml-2'}>Forks: <b>{commit.forks}</b></label>
+            <label className={'ml-2'}>Iterations: <b>{commit.iterations}</b></label>
+            <label className={'ml-2'}>Threads: <b>{commit.threads}</b></label>
+            <label className={'ml-2'}>Mode: <b>{commit.mode}</b></label>
+        </div>)}
+        <hr className={'my-3'} />
+        {commits.map(commit => <div className={'p-2 d-block'} key={commit.id}>
+            {JSON.stringify(commit.score)} <br />
+            {JSON.stringify(commit.data)}
+        </div>)}
+        <Chart type={'scatter'} x={[1, 2, 3]} y={[2, 5, 3]} title={'Test'} />
     </section>);
 }
 
-export default Benchmark;
+export {Benchmark};

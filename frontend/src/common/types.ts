@@ -1,3 +1,10 @@
+import {ReactNode} from 'react';
+
+export type GenericProps = {
+    key?: string,
+    children?: ReactNode,
+    className?: string
+};
 export type Commit = {
     id: string,
     comment: string,
