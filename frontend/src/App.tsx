@@ -1,27 +1,39 @@
-import {HashRouter, Route, Routes} from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
-import {useEffect} from 'react';
-import {useDispatch} from 'react-redux';
+import {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import Commits from './common/commits';
 import {setCommits} from './redux/slices/commits';
+import U from './common/u';
+import {Commit, State} from './common/types';
+import {setBenchmarks} from './redux/slices/benchmarks';
+import Benchmark from "./pages/Benchmark";
 
 function App() {
   const dispatch = useDispatch();
+  const page = useSelector((state: State) => state.page);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     (async function() {
       const response = await Commits.getAll();
       if(response.code !== 200) return;
-      dispatch(setCommits(response.data));
+      const commits = U.wrapper<Commit[]>(response.data);
+      dispatch(setCommits(commits));
+      const benchmarks = commits.map(commit => commit.benchmark);
+      dispatch(setBenchmarks(U.removeDuplicates<string>(benchmarks)));
+      setLoading(false);
     })();
   }, []);
 
-  return (<HashRouter>
-    <Routes>
-      <Route path={''} element={<Dashboard />} />
-      <Route path={'*'} element={<div>Error 404: Page Not Found</div>} />
-    </Routes>
-  </HashRouter>);
+  if(loading) return(<div>
+    Loading...
+  </div>);
+  if(page.path === 'benchmark' && page.id) return(<section>
+    <Benchmark name={page.id} />
+  </section>);
+  return(<section>
+    <Dashboard />
+  </section>);
 }
 
 export default App;

@@ -11,5 +11,12 @@ export type Commit = {
     score: number[],
     data: number[][][]
 };
-
-export type State = {commits: Commit[]};
+export type Page = {
+    path: string,
+    id: string|undefined
+};
+export type State = {
+    commits: Commit[],
+    benchmarks: string[],
+    page: Page
+};
