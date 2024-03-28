@@ -1,3 +1,5 @@
 export {Loader} from './Loader';
 export {Navbar} from './Navbar';
-export {Chart} from './Chart';
+export {CommitInfo} from './CommitInfo';
+export {LineChart} from './LineChart';
+export {ViolinChart} from './ViolinChart';
