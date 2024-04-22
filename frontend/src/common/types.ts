@@ -5,6 +5,10 @@ export type GenericProps = {
     children?: ReactNode,
     className?: string
 };
+export type Response = {
+    code: number,
+    data: unknown
+}
 export type Commit = {
     id: string,
     comment: string,
