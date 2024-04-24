@@ -18,9 +18,8 @@ export type Commit = {
     iterations: number,
     forks: number,
     jdk: string,
-    unit: string,
-    score: number[],
-    data: number[][][]
+    params: unknown,
+    data: number[][]
 };
 export type Page = {
     path: string,

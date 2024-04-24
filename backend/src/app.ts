@@ -30,11 +30,11 @@ console.log(`Server Listening on port ${PORT}.`);
     let connection = false;
     while(!connection) {
         try {
-            await mongoose.connect(process.env['MONGODB_URL'], {dbName: 'jmh'});
+            await mongoose.connect(process.env['MONGODB_URL'] || 'mongodb://localhost:27017', {dbName: 'jmh'});
             console.log('DB Connection done.');
             connection = true;
         } catch (error) {
-            console.log(`DB Connection error (${process.env['MONGODB_URL']}), waiting 30 seconds...`);
+            console.log(`DB Connection error (${process.env['MONGODB_URL'] || 'mongodb://localhost:27017'}), waiting 30 seconds...`);
             await U.sleep(30);
         }
     }

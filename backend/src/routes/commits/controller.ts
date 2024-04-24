@@ -11,24 +11,21 @@ export class CommitsController {
             if (!file) return res.status(400).send('Missing required parameters (file).');
             const objects = JSON.parse(file.buffer.toString('utf-8'));
             if (objects.length <= 0) return res.status(500).send('File Does Not Contain Entries.');
-            const score = [];
-            const data = [];
             for(const object of objects) {
-                score.push(object['primaryMetric']['score']);
-                data.push(object['primaryMetric']['rawData']);
+                const raw = {
+                    id: id,
+                    comment: comment || 'Uncomment',
+                    benchmark: object['benchmark'],
+                    mode: object['mode'],
+                    threads: object['threads'],
+                    iterations: object['measurementIterations'],
+                    forks: object['forks'],
+                    jdk: object['jdkVersion'],
+                    params: object['params'],
+                    data: object['primaryMetric']['rawData']
+                };
+                await Commits.create(raw);
             }
-            const object = objects[0];
-            const raw = {id, score, data,
-                comment: comment || '',
-                benchmark: object['benchmark'],
-                mode: object['mode'],
-                threads: object['threads'],
-                iterations: object['measurementIterations'],
-                forks: object['forks'],
-                jdk: object['jdkVersion'],
-                unit: object['primaryMetric']['scoreUnit']
-            };
-            await Commits.create(raw);
             return res.status(200).send('Commit Added.');
         } catch (error) {return res.status(400).send(error);}
     }

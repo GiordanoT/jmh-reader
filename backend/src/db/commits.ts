@@ -10,9 +10,8 @@ export class Commits {
         iterations: {type: Number},
         forks: {type: Number},
         jdk: {type: String},
-        unit: {type: String},
-        score: {type: [Number]},
-        data: {type: [[[Number]]]}
+        params: {type: Schema.Types.Mixed},
+        data: {type: [[Number]]}
     });
 
     protected static Model = model(this.name.slice(0, -1), this.Schema);
@@ -20,5 +19,5 @@ export class Commits {
 
     static getAll = () => this.Model.find();
     static create = (values: Record<string, unknown>) => new this.Model(values).save().then(entity => entity.toObject());
-    static delete = (id: string) => this.Model.findOneAndDelete({id});
+    static delete = (id: string) => this.Model.deleteMany({id});
 }

@@ -91995,9 +91995,8 @@ var Commits = class {
       iterations: { type: Number },
       forks: { type: Number },
       jdk: { type: String },
-      unit: { type: String },
-      score: { type: [Number] },
-      data: { type: [[[Number]]] }
+      params: { type: import_mongoose.Schema.Types.Mixed },
+      data: { type: [[Number]] }
     });
   }
   static {
@@ -92013,7 +92012,7 @@ var Commits = class {
     this.create = (values) => new this.Model(values).save().then((entity) => entity.toObject());
   }
   static {
-    this.delete = (id) => this.Model.findOneAndDelete({ id });
+    this.delete = (id) => this.Model.deleteMany({ id });
   }
 };
 
@@ -92030,27 +92029,21 @@ var CommitsController = class {
         const objects = JSON.parse(file.buffer.toString("utf-8"));
         if (objects.length <= 0)
           return res.status(500).send("File Does Not Contain Entries.");
-        const score = [];
-        const data = [];
-        for (const object2 of objects) {
-          score.push(object2["primaryMetric"]["score"]);
-          data.push(object2["primaryMetric"]["rawData"]);
+        for (const object of objects) {
+          const raw = {
+            id,
+            comment: comment || "Uncomment",
+            benchmark: object["benchmark"],
+            mode: object["mode"],
+            threads: object["threads"],
+            iterations: object["measurementIterations"],
+            forks: object["forks"],
+            jdk: object["jdkVersion"],
+            params: object["params"],
+            data: object["primaryMetric"]["rawData"]
+          };
+          await Commits.create(raw);
         }
-        const object = objects[0];
-        const raw = {
-          id,
-          score,
-          data,
-          comment: comment || "",
-          benchmark: object["benchmark"],
-          mode: object["mode"],
-          threads: object["threads"],
-          iterations: object["measurementIterations"],
-          forks: object["forks"],
-          jdk: object["jdkVersion"],
-          unit: object["primaryMetric"]["scoreUnit"]
-        };
-        await Commits.create(raw);
         return res.status(200).send("Commit Added.");
       } catch (error) {
         return res.status(400).send(error);

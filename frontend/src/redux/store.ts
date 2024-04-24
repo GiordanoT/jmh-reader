@@ -10,3 +10,6 @@ export const store = configureStore({
         page: pageSlice.reducer
     }
 });
+
+// @ts-ignore
+window.store = store; /* DEBUG */
