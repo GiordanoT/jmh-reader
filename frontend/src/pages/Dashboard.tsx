@@ -11,7 +11,7 @@ function Dashboard(props: Props) {
     return(<section>
         <Navbar />
         <h2 className={'p-3 font-bold'}>Benchmarks</h2>
-        {benchmarks.map(benchmark => <div className={'m-1 p-3 border border-indigo-400 rounded d-flex'} key={benchmark}>
+        {benchmarks.map(benchmark => <div className={'m-1 p-3 border border-dashed border-indigo-400 rounded d-flex'} key={benchmark}>
             <button onClick={e => dispatch(toBenchmark(benchmark))} className={'btn bg-indigo-500 px-1 text-white rounded'}>
                 <i className={'bi bi-eye-fill'} />
             </button>
