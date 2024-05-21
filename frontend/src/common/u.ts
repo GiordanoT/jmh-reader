@@ -65,6 +65,17 @@ class U {
         }
         return mode;
     }
+
+    static generateForks(iterations: number, forks: number): string[] {
+        const forkNames: string[] = [];
+        for (let i = 0; i < iterations * forks; i++) {
+            const forkNumber = Math.floor(i / iterations) + 1;
+            const forkName = `fork ${forkNumber}`;
+            forkNames.push(forkName);
+        }
+        return forkNames;
+    }
+
 }
 
 export default U;

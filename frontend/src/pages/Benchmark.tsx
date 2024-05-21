@@ -35,7 +35,7 @@ function Benchmark(props: Props) {
         <div className={'m-3 p-3 border border-dashed border-indigo-400 rounded d-flex'}>
             {/* Commits Data */}
             {Object.entries(parametrized).map(([p, c]) =>
-                <Parametrized key={p} params={p} forksNumber={c[0] ? c[0].forks : 0} data={c.map(_c => _c.data)} />)
+                <Parametrized key={p} params={p} iterations={c[0] ? c[0].iterations : 0} forksNumber={c[0] ? c[0].forks : 0} data={c.map(_c => _c.data)} />)
             }
         </div>
     </section>);
