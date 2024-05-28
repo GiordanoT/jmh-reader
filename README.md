@@ -4,4 +4,6 @@ RUN THE APP:
   - run the command: "docker compose up -d"
     
 ADD A COMMIT:
-  - POST on "http://localhost:5000/jmh/commits", the payload should contain: comment: Text, file: File
+  - POST on "http://localhost:5000/jmh/commits", the payload should contain:
+      + comment: Text
+      + file: File
