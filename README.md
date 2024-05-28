@@ -2,6 +2,7 @@ In this repository, you'll find a Node.js web server that exposes endpoints for 
 
 RUN THE APP:
   - run the command: "docker compose up -d"
+  - go to "http://localhost:5001"
     
 ADD A COMMIT:
   - POST on "http://localhost:5000/jmh/commits", the payload should contain:
