@@ -34,14 +34,14 @@ services:
     ports:
       - 5000:5000
 
-  # frontend:
-  #  build: ./frontend
-  #  container_name: frontend
-  #  restart: always
-  #  depends_on:
-  #    - backend
-  #  ports:
-  #    - 5001:3000
+  frontend:
+    build: ./frontend
+    container_name: frontend
+    restart: always
+    depends_on:
+      - backend
+    ports:
+      - 5001:3000
 
 volumes:
   database:
