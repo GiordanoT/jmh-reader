@@ -66,6 +66,19 @@ class U {
         return mode;
     }
 
+    static percentile(matrix: number[][], percentile: number): number {
+        const flattenedArray: number[] = matrix.reduce((acc, row) => acc.concat(row), []);
+        flattenedArray.sort((a, b) => a - b);
+        const index = (percentile / 100) * (flattenedArray.length - 1);
+        const lowerIndex = Math.floor(index);
+        const upperIndex = Math.ceil(index);
+        if (lowerIndex === upperIndex) return flattenedArray[lowerIndex];
+        const lowerValue = flattenedArray[lowerIndex];
+        const upperValue = flattenedArray[upperIndex];
+        const fraction = index - lowerIndex;
+        return lowerValue + fraction * (upperValue - lowerValue);
+    }
+
     static generateForks(iterations: number, forks: number): string[] {
         const forkNames: string[] = [];
         for (let i = 0; i < iterations * forks; i++) {

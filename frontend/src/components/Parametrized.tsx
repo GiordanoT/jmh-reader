@@ -1,5 +1,5 @@
 import {GenericProps} from '../common/types';
-import {ViolinChart, MeanChart, MedianChart, ModeChart, ScatterPlot} from './';
+import {ViolinChart, MeanChart, MedianChart, ModeChart, ScatterPlot, StatisticsChart} from './';
 
 type Props = GenericProps & {iterations: number, forksNumber: number, params: string|undefined, data: number[][][]};
 function Parametrized(props: Props) {
@@ -17,9 +17,10 @@ function Parametrized(props: Props) {
         <b className={'text-indigo-900'}>
             Parameters: {(params || 'No Parameters').replace(/"/g, '').replace(',', ', ')}
         </b>
-        <MeanChart data={data} />
+        <StatisticsChart data={data} />
+        {/*<MeanChart data={data} />
         <MedianChart data={data} />
-        <ModeChart data={data} />
+        <ModeChart data={data} />*/}
         {Object.entries(forks).map(([f, d]) =>
             <ViolinChart key={f} data={d} title={`FORK ${Number(f) + 1}`} />
         )}
