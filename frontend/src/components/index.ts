@@ -7,3 +7,4 @@ export {ModeChart} from './ModeChart';
 export {StatisticsChart} from './StatisticsChart';
 export {ScatterPlot} from './ScatterPlot';
 export {ViolinChart} from './ViolinChart';
+export {ViolinChart2} from './ViolinChart2';
