@@ -11,6 +11,7 @@ export class Commits {
         forks: {type: Number},
         jdk: {type: String},
         params: {type: Schema.Types.Mixed},
+        unit: {type: String},
         data: {type: [[Number]]}
     });
 

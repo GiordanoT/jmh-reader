@@ -19,6 +19,7 @@ export type Commit = {
     forks: number,
     jdk: string,
     params: unknown,
+    unit: string,
     data: number[][]
 };
 export type Page = {

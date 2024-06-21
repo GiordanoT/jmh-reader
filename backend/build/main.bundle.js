@@ -91996,6 +91996,7 @@ var Commits = class {
       forks: { type: Number },
       jdk: { type: String },
       params: { type: import_mongoose.Schema.Types.Mixed },
+      unit: { type: String },
       data: { type: [[Number]] }
     });
   }
@@ -92040,6 +92041,7 @@ var CommitsController = class {
             forks: object["forks"],
             jdk: object["jdkVersion"],
             params: object["params"],
+            unit: object["primaryMetric"]["scoreUnit"],
             data: object["primaryMetric"]["rawData"]
           };
           await Commits.create(raw);

@@ -25,6 +25,7 @@ function Benchmark(props: Props) {
             <label className={'ml-2'}>Iterations: <b>{c[0].iterations}</b></label>
             <label className={'ml-2'}>Threads: <b>{c[0].threads}</b></label>
             <label className={'ml-2'}>Mode: <b>{c[0].mode}</b></label>
+            <label className={'ml-2'}>Unit: <b>{c[0].unit}</b></label>
             <button onClick={async() => {
                 await Commits.delete(c[0].id);
                 U.refresh();

@@ -22,6 +22,7 @@ export class CommitsController {
                     forks: object['forks'],
                     jdk: object['jdkVersion'],
                     params: object['params'],
+                    unit: object['primaryMetric']['scoreUnit'],
                     data: object['primaryMetric']['rawData']
                 };
                 await Commits.create(raw);
